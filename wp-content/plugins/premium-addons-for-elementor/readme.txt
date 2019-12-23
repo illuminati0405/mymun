@@ -5,7 +5,7 @@ Donate Link: https://premiumaddons.com/?utm_source=wp-repo&utm_medium=link&utm_c
 Requires at Least: 4.5
 Tested Up To: 5.3
 Requires PHP: 5.4
-Stable Tag: 3.9.8
+Stable Tag: 3.9.9
 License: GPL v3.0
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -174,6 +174,13 @@ Premium Addons for Elementor is 100% Ads Free, Ads can only be detected from You
 14. Premium Progress Bar Widget for Elementor
 
 == Changelog ==
+
+= 3.9.9 =
+
+- Tweak: Added `Image Size` option for featured image in Blog widget.
+- Tweak: Added `Tooltips` option for Feature List in Pricing Table widget.
+- Tweak: Select between Image/Icon in Image Separator widget.
+- Tweak: Added responsive controls for `Gutter` option in Image Separator widget.
 
 = 3.9.8 =
 

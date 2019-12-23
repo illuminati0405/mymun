@@ -963,6 +963,13 @@ a.premium-image-separator-link:hover, a.premium-image-separator-link:visited, a.
 .premium-image-separator-container .img-responsive {
     display: inline-block;
 }
+.premium-image-separator-container i {
+    padding: 0.1em;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;    
+}
 /**************** Premium Modal Box ****************/
 /***************************************************/
 .premium-modal-box-button-selector, .premium-modal-box-modal-lower-close {
@@ -2490,6 +2497,31 @@ ul.premium-person-social-list {
    -webkit-align-items: center;
    -ms-flex-align: center;
    align-items: center;
+}
+.premium-pricing-list .premium-pricing-list-span {
+    position: relative;
+}
+.premium-pricing-list .list-item-tooltip {
+    border-bottom: 1px dotted;
+}
+.premium-pricing-list .premium-pricing-list-tooltip {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    visibility: hidden;
+    padding: 15px 20px;
+    border-radius: 5px;
+    min-width: 200px;
+    overflow: hidden;
+    text-align: left;
+    font-size: .8rem;
+    color: #fff;
+    background-color: #aaa;
+}
+.premium-pricing-list-span:hover .premium-pricing-list-tooltip {
+    z-index: 99;
+    visibility: visible;
+    opacity: 1;
 }
 .premium-pricing-slashed-price-value {
     display: inline-block;

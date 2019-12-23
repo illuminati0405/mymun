@@ -674,26 +674,26 @@ class Premium_Modalbox extends Widget_Base {
         
         $this->add_group_control(
             Group_Control_Box_Shadow::get_type(),
-                [
-                    'label'         => __('Shadow','premium-addons-for-elementor'),
-                    'name'          => 'premium_modal_box_selector_box_shadow',
-                    'selector'      => '{{WRAPPER}} .premium-modal-box-button-selector, {{WRAPPER}} .premium-modal-box-img-selector',
-                    'condition'     => [
-                        'premium_modal_box_display_on'  => [ 'button', 'image' ],
-                        ]
+            [
+                'label'         => __('Shadow','premium-addons-for-elementor'),
+                'name'          => 'premium_modal_box_selector_box_shadow',
+                'selector'      => '{{WRAPPER}} .premium-modal-box-button-selector, {{WRAPPER}} .premium-modal-box-img-selector',
+                'condition'     => [
+                    'premium_modal_box_display_on'  => [ 'button', 'image' ],
                 ]
-                );
+            ]
+        );
         
         $this->add_group_control(
             Group_Control_Text_Shadow::get_type(),
-                [
-                    'name'          => 'premium_modal_box_selector_text_shadow',
-                    'selector'      => '{{WRAPPER}} .premium-modal-box-text-selector',
-                    'condition'     => [
-                        'premium_modal_box_display_on'  => 'text',
-                        ]
+            [
+                'name'          => 'premium_modal_box_selector_text_shadow',
+                'selector'      => '{{WRAPPER}} .premium-modal-box-text-selector',
+                'condition'     => [
+                    'premium_modal_box_display_on'  => 'text',
                 ]
-                );
+            ]
+        );
         
         $this->end_controls_tab();
         

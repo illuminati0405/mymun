@@ -5,6 +5,7 @@ namespace PremiumAddons\Widgets;
 use PremiumAddons\Helper_Functions;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Image_Size;
 use Elementor\Scheme_Color;
 use Elementor\Scheme_Typography;
 use Elementor\Group_Control_Border;
@@ -65,9 +66,17 @@ class Premium_Blog extends Widget_Base {
 
         $this->start_controls_section('premium_blog_general_settings',
             [
-                'label'         => __('Image', 'premium-addons-for-elementor'),
+                'label'         => __('Featured Image', 'premium-addons-for-elementor'),
             ]
         );
+        
+        $this->add_group_control(
+			Group_Control_Image_Size::get_type(),
+			[
+				'name' => 'featured_image',
+				'default' => 'full'
+			]
+		);
         
         $this->add_control('premium_blog_hover_image_effect',
             [
@@ -1780,10 +1789,19 @@ class Premium_Blog extends Widget_Base {
         
         $skin = $settings['premium_blog_skin'];
         
+        $settings['featured_image']      = [
+			'id' => get_post_thumbnail_id(),
+		];
+        
+        $thumbnail_html = Group_Control_Image_Size::get_attachment_image_html( $settings, 'featured_image' );
+        
+        if( empty( $thumbnail_html ) )
+            return;
+        
         if( 'classic' !== $skin ): ?>
             <a href="<?php the_permalink(); ?>" target="<?php echo esc_attr( $target ); ?>">
         <?php endif;
-                the_post_thumbnail( 'full' );
+            echo $thumbnail_html;
         if( 'classic' !== $skin ): ?>
             </a>
         <?php endif;

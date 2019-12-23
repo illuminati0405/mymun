@@ -187,15 +187,14 @@ class Premium_Pricing_Table extends Widget_Base {
         
         $this->end_controls_section();
         
-        /*Icon List Content Section*/
         $this->start_controls_section('premium_pricing_table_list_section',
-                [
-                    'label'         => __('Feature List', 'premium-addons-for-elementor'),
-                    'condition'     => [
-                        'premium_pricing_table_list_switcher'  => 'yes',
-                        ]
-                    ]
-                );
+            [
+                'label'         => __('Feature List', 'premium-addons-for-elementor'),
+                'condition'     => [
+                    'premium_pricing_table_list_switcher'  => 'yes',
+                ]
+            ]
+        );
         
         $repeater = new REPEATER();
         
@@ -218,6 +217,25 @@ class Premium_Pricing_Table extends Widget_Base {
 					'value'     => 'fas fa-check',
 					'library'   => 'fa-solid',
 				],
+            ]
+        );
+
+        $repeater->add_control('premium_pricing_table_item_tooltip',
+            [
+                'label'         => __('Tooltip', 'premium-addons-for-elementor'),
+                'type'          => Controls_Manager::SWITCHER,
+            ]
+        );
+
+        $repeater->add_control('premium_pricing_table_item_tooltip_text',
+            [
+                'label'         => __('Tooltip Text', 'premium-addons-for-elementor'),
+                'type'          => Controls_Manager::TEXTAREA,
+                'dynamic'       => [ 'active' => true ],
+                'default'       => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                'condition'     => [
+                    'premium_pricing_table_item_tooltip'    => 'yes'
+                ]
             ]
         );
         
@@ -479,11 +497,11 @@ class Premium_Pricing_Table extends Widget_Base {
                 );
         
         $this->add_control('premium_pricing_table_icon_switcher',
-                [
-                    'label'         => __('Icon', 'premium-addons-for-elementor'),
-                    'type'          => Controls_Manager::SWITCHER,
-                ]
-                );
+            [
+                'label'         => __('Icon', 'premium-addons-for-elementor'),
+                'type'          => Controls_Manager::SWITCHER,
+            ]
+        );
         
         $this->add_control('premium_pricing_table_title_switcher',
                 [
@@ -1112,10 +1130,8 @@ class Premium_Pricing_Table extends Widget_Base {
             ]      
         );
         
-        /*End Price Style Settings */
         $this->end_controls_section();
         
-        /*Start List Style Settings*/
         $this->start_controls_section('premium_pricing_list_style_settings',
                 [
                     'label'         => __('Features', 'premium-addons-for-elementor'),
@@ -1278,6 +1294,97 @@ class Premium_Pricing_Table extends Widget_Base {
                     ]
                 ]);
         
+        $this->end_controls_section();
+
+        $this->start_controls_section('tooltips_style',
+            [
+                'label'         => __('Tooltips', 'premium-addons-for-elementor'),
+                'tab'           => Controls_Manager::TAB_STYLE,
+                'condition'     => [
+                    'premium_pricing_table_list_switcher'  => 'yes',
+                ]
+            ]
+        );
+
+        $this->add_responsive_control('tooltips_align',
+            [
+                'label'             => __( 'Alignment', 'premium-addons-for-elementor' ),
+                'type'              => Controls_Manager::CHOOSE,
+                'options'           => [
+                    'left'    => [
+                        'title' => __( 'Left', 'premium-addons-for-elementor' ),
+                        'icon'  => 'fa fa-align-left',
+                    ],
+                    'center' => [
+                        'title' => __( 'Center', 'premium-addons-for-elementor' ),
+                        'icon'  => 'fa fa-align-center',
+                    ],
+                    'right' => [
+                        'title' => __( 'Right', 'premium-addons-for-elementor' ),
+                        'icon'  => 'fa fa-align-right',
+                    ],
+                ],
+                'selectors'         => [
+                    '{{WRAPPER}} .premium-pricing-list-tooltip' => 'text-align: {{VALUE}}',
+                ],
+            ]
+        );
+
+        $this->add_responsive_control('tooltips_width',
+            [
+                'label'         => __('Width', 'premium-addons-for-elementor'),
+                'type'          => Controls_Manager::SLIDER,
+                'range'         => [
+                    'px'    => [
+                        'min'   => 1,
+                        'min'   => 400,
+                    ]
+                ],
+                'selectors'     => [
+                    '{{WRAPPER}} .premium-pricing-list-tooltip' => 'min-width: {{SIZE}}px;'
+                ]
+            ]
+        );
+
+        $this->add_control('tooltips_color',
+            [
+                'label'         => __('Color', 'premium-addons-for-elementor'),
+                'type'          => Controls_Manager::COLOR,
+                'selectors'     => [
+                    '{{WRAPPER}} .premium-pricing-list-tooltip'  => 'color: {{VALUE}};'
+                ]
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name'          => 'tooltips_typo',
+                'scheme'        => Scheme_Typography::TYPOGRAPHY_1,
+                'selector'      => '{{WRAPPER}} .premium-pricing-list-tooltip',
+            ]
+        );
+
+        $this->add_control('tooltips_background_color',
+            [
+                'label'         => __('Background Color', 'premium-addons-for-elementor'),
+                'type'          => Controls_Manager::COLOR,
+                'selectors'     => [
+                    '{{WRAPPER}} .premium-pricing-list-tooltip'  => 'background-color: {{VALUE}};'
+                ]
+            ]
+        );
+
+        $this->add_control('tooltips_border_color',
+            [
+                'label'         => __('Border Color', 'premium-addons-for-elementor'),
+                'type'          => Controls_Manager::COLOR,
+                'selectors'     => [
+                    '{{WRAPPER}} .list-item-tooltip'  => 'border-color: {{VALUE}};'
+                ]
+            ]
+        );
+
         $this->end_controls_section();
         
         /*Start Description Style Settings */
@@ -1963,8 +2070,16 @@ class Premium_Pricing_Table extends Widget_Base {
                                 Icons_Manager::render_icon( $item['premium_pricing_list_item_icon_updated'], [ 'aria-hidden' => 'true' ] );
                             else: ?>
                                 <i class="<?php echo $item['premium_pricing_list_item_icon']; ?>"></i>
+                            <?php endif;
+                            if ( ! empty( $item['premium_pricing_list_item_text'] ) ) :
+                                $item_class = 'yes' === $item['premium_pricing_table_item_tooltip'] ? 'list-item-tooltip' : '';
+                            ?>
+                                <span class="premium-pricing-list-span <?php echo $item_class; ?>"><?php echo esc_html( $item['premium_pricing_list_item_text'] );
+                                if ( 'yes' === $item['premium_pricing_table_item_tooltip'] && ! empty( $item['premium_pricing_table_item_tooltip_text'] ) ) : ?>
+                                        <span class="premium-pricing-list-tooltip"><?php echo esc_html( $item['premium_pricing_table_item_tooltip_text'] ); ?></span>
+                                    <?php endif; ?>    
+                                </span>
                             <?php endif; ?>
-                            <span class="premium-pricing-list-span"><?php echo esc_html( $item['premium_pricing_list_item_text'] ); ?></span>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -2054,8 +2169,16 @@ class Premium_Pricing_Table extends Widget_Base {
                                 {{{ listIconHTML.value }}}
                             <# } else { #>
                                 <i class="{{ item.premium_pricing_list_item_icon }}" aria-hidden="true"></i>
+                            <# }
+                            if ( '' !== item.premium_pricing_list_item_text ) { 
+                                var itemClass = 'yes' === item.premium_pricing_table_item_tooltip ? 'list-item-tooltip' : '';
+                            #>
+                                <span class="premium-pricing-list-span {{itemClass}}">{{{ item.premium_pricing_list_item_text }}}
+                                <# if ( 'yes' === item.premium_pricing_table_item_tooltip && '' !== item.premium_pricing_table_item_tooltip_text ) { #>
+                                    <span class="premium-pricing-list-tooltip">{{{ item.premium_pricing_table_item_tooltip_text }}}</span>
+                                <# } #>
+                                </span>
                             <# } #>
-                            <span class="premium-pricing-list-span">{{{ item.premium_pricing_list_item_text }}}</span>
                         </li>
                     <# } ); #>
                     </ul>
